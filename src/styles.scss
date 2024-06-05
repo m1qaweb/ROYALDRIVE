@@ -1,1 +1,28 @@
-/* You can add global styles to this file, and also import other style files */
+@import "../node_modules/@angular/material/prebuilt-themes/indigo-pink.css";
+@import url("https://fonts.googleapis.com/css2?family=Alex+Brush&display=swap");
+@import "../node_modules/fullpage.js/dist/fullpage.min.css";
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  height: 100vh;
+  background-color: black;
+  color: black;
+}
+main {
+  height: 87vh;
+}
+#animation-container {
+  width: 100%;
+  height: 400px;
+  margin-top: 52rem;
+  position: absolute;
+  bottom: -9%;
+  left: 0%;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
