@@ -63,7 +63,7 @@ export class AppComponent implements AfterViewInit {
     this.scrollToCurrentSection();
     this.cloneCarouselItems();
     this.startCarousel();
-    this.observeSection2();
+    this.observeSections();
     this.updateIndicators();
   }
 
@@ -159,24 +159,30 @@ export class AppComponent implements AfterViewInit {
     }
   }
 
-  private observeSection2() {
-    const section2 = document.getElementById('section2');
-    if (!section2) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            section2.classList.add('in-view');
-          } else {
-            section2.classList.remove('in-view');
-          }
-        });
-      },
-      { threshold: 0.5 }
-    );
-
-    observer.observe(section2);
+  private observeSections() {
+    this.sections.forEach((section, index) => {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              if (index === 1) {
+                section.classList.add('in-view');
+              } else if (index === 2) {
+                section.classList.add('active');
+              }
+            } else {
+              if (index === 1) {
+                section.classList.remove('in-view');
+              } else if (index === 2) {
+                section.classList.remove('active');
+              }
+            }
+          });
+        },
+        { threshold: 0.5 }
+      );
+      observer.observe(section);
+    });
   }
 
   private updateIndicators() {
