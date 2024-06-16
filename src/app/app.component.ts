@@ -1,15 +1,18 @@
-import { Component, HostListener, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  HostListener,
+  AfterViewInit,
+  Renderer2,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router, NavigationEnd } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { BackgroundVideoComponent } from './background-video/background-video.component';
 import { LottieAnimationComponent } from './lottie-animation/lottie-animation.component';
-
-interface Car {
-  brand: string;
-  image: string;
-  price: string;
-}
+import { VehiclesComponent } from './vehicles/vehicles.component';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -17,58 +20,53 @@ interface Car {
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
   imports: [
+    HttpClientModule,
     HeaderComponent,
     FooterComponent,
     CommonModule,
     BackgroundVideoComponent,
     LottieAnimationComponent,
+    RouterModule,
+    VehiclesComponent,
   ],
 })
 export class AppComponent implements AfterViewInit {
   currentSection: number = 0;
   sections!: NodeListOf<HTMLElement>;
-  currentSlide: number = 0;
-  carouselItems: Car[] = [
-    {
-      brand: 'BMW',
-      image: 'assets/images/bmw.jpg',
-      price: '$50,000',
-    },
-    {
-      brand: 'Audi',
-      image: 'assets/images/audi.jpg',
-      price: '$60,000',
-    },
-    {
-      brand: 'Mercedes',
-      image: 'assets/images/mercedes.jpg',
-      price: '$70,000',
-    },
-    {
-      brand: 'Tesla',
-      image: 'assets/images/tesla.jpg',
-      price: '$80,000',
-    },
-    {
-      brand: 'Porsche',
-      image: 'assets/images/porsche.jpg',
-      price: '$90,000',
-    },
-  ];
+  private isScrolling = false;
+  public isVehiclesRoute = false;
+
+  constructor(private renderer: Renderer2, private router: Router) {
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.isVehiclesRoute = event.url === '/vehicles';
+        if (this.isVehiclesRoute) {
+          this.lockScroll();
+          this.scrollToMenuS();
+        } else {
+          this.unlockScroll();
+        }
+      }
+    });
+  }
 
   ngAfterViewInit() {
     this.sections = document.querySelectorAll(
       '.section'
     ) as NodeListOf<HTMLElement>;
     this.scrollToCurrentSection();
-    this.cloneCarouselItems();
-    this.startCarousel();
     this.observeSections();
     this.updateIndicators();
+    this.hideLoadingScreen();
   }
 
   @HostListener('window:wheel', ['$event'])
   onScroll(event: WheelEvent) {
+    if (this.isScrolling || this.isVehiclesRoute) return;
+
+    this.isScrolling = true;
+    setTimeout(() => (this.isScrolling = false), 1500);
+
     if (event.deltaY > 0) {
       this.nextSection();
     } else {
@@ -78,84 +76,48 @@ export class AppComponent implements AfterViewInit {
 
   private nextSection() {
     if (this.currentSection < this.sections.length - 1) {
-      this.currentSection++;
-      this.scrollToCurrentSection();
-      this.updateIndicators();
+      this.showTransitionOverlay(() => {
+        this.currentSection++;
+        this.scrollToCurrentSection();
+        this.updateIndicators();
+      });
     }
   }
 
   private previousSection() {
     if (this.currentSection > 0) {
-      this.currentSection--;
-      this.scrollToCurrentSection();
-      this.updateIndicators();
+      this.showTransitionOverlay(() => {
+        this.currentSection--;
+        this.scrollToCurrentSection();
+        this.updateIndicators();
+      });
     }
   }
 
   private scrollToCurrentSection() {
     this.sections.forEach((section, index) => {
-      section.style.opacity = index === this.currentSection ? '1' : '0';
-      section.style.transform =
-        index === this.currentSection
-          ? 'translateY(0)'
-          : index < this.currentSection
-          ? 'translateY(-100vh)'
-          : 'translateY(100vh)';
-      section.style.transition =
-        'opacity 1s ease-in-out, transform 1s ease-in-out';
-      this.toggleDarkOverlay(section, index);
-    });
-  }
+      section.style.opacity = '0';
+      section.style.transform = 'translateY(100vh)';
+      section.style.visibility = 'hidden';
+      section.style.zIndex = '1';
 
-  private toggleDarkOverlay(section: HTMLElement, index: number) {
-    const overlay = section.querySelector('.dark-overlay') as HTMLElement;
-    if (overlay) {
-      overlay.style.opacity = index === this.currentSection - 1 ? '1' : '0';
-    }
-  }
-
-  private cloneCarouselItems() {
-    const carouselInner = document.querySelector(
-      '.carousel-inner'
-    ) as HTMLElement;
-    const firstItems = Array.from(carouselInner.children).slice(0, 3);
-    const lastItems = Array.from(carouselInner.children).slice(-3);
-
-    firstItems.forEach((item) => {
-      const clone = item.cloneNode(true) as HTMLElement;
-      carouselInner.appendChild(clone);
+      if (section.id === 'menu-s') {
+        section.classList.remove('active');
+      }
     });
 
-    lastItems.reverse().forEach((item) => {
-      const clone = item.cloneNode(true) as HTMLElement;
-      carouselInner.insertBefore(clone, carouselInner.firstChild);
-    });
-  }
+    const currentSectionElement = this.sections[
+      this.currentSection
+    ] as HTMLElement;
+    currentSectionElement.style.visibility = 'visible';
+    currentSectionElement.style.zIndex = '2';
+    currentSectionElement.style.transform = 'translateY(0)';
+    currentSectionElement.style.opacity = '1';
 
-  startCarousel() {
-    setInterval(() => {
-      this.nextSlide();
-    }, 3000);
-  }
-
-  nextSlide() {
-    const carouselInner = document.querySelector(
-      '.carousel-inner'
-    ) as HTMLElement;
-    if (!carouselInner) return;
-
-    this.currentSlide++;
-    carouselInner.style.transition = 'transform 0.8s ease-in-out';
-    carouselInner.style.transform = `translateX(-${
-      (this.currentSlide + 3) * (100 / 3)
-    }%)`;
-
-    if (this.currentSlide === this.carouselItems.length) {
+    if (currentSectionElement.id === 'menu-s') {
       setTimeout(() => {
-        carouselInner.style.transition = 'none';
-        this.currentSlide = 0;
-        carouselInner.style.transform = `translateX(-${3 * (100 / 3)}%)`;
-      }, 800);
+        currentSectionElement.classList.add('active');
+      }, 50);
     }
   }
 
@@ -165,15 +127,13 @@ export class AppComponent implements AfterViewInit {
         (entries) => {
           entries.forEach((entry) => {
             if (entry.isIntersecting) {
-              if (index === 1) {
-                section.classList.add('in-view');
-              } else if (index === 2) {
+              section.classList.add('in-view');
+              if (section.id === 'menu-s') {
                 section.classList.add('active');
               }
             } else {
-              if (index === 1) {
-                section.classList.remove('in-view');
-              } else if (index === 2) {
+              section.classList.remove('in-view');
+              if (section.id === 'menu-s') {
                 section.classList.remove('active');
               }
             }
@@ -188,11 +148,111 @@ export class AppComponent implements AfterViewInit {
   private updateIndicators() {
     const indicators = document.querySelectorAll('.indicator');
     indicators.forEach((indicator, index) => {
+      const indicatorElement = indicator as HTMLElement;
       if (index === this.currentSection) {
-        indicator.classList.add('active');
+        indicatorElement.classList.add('active');
       } else {
-        indicator.classList.remove('active');
+        indicatorElement.classList.remove('active');
       }
     });
+  }
+
+  private hideLoadingScreen() {
+    const loadingScreen = document.getElementById('loading-screen');
+
+    if (loadingScreen) {
+      setTimeout(() => {
+        this.renderer.addClass(document.body, 'loaded');
+
+        const fullPage = document.getElementById('fullpage');
+        if (fullPage) {
+          fullPage.classList.remove('hidden');
+        }
+      }, 3500);
+
+      setTimeout(() => {
+        if (loadingScreen) {
+          loadingScreen.style.display = 'none';
+        }
+      }, 4500);
+    }
+  }
+
+  private showTransitionOverlay(callback: () => void) {
+    const overlay = document.getElementById('transition-overlay');
+    const currentSectionElement = this.sections[
+      this.currentSection
+    ] as HTMLElement;
+
+    if (overlay) {
+      overlay.style.transform = 'translateY(100%)';
+      overlay.style.opacity = '1';
+      overlay.style.transition =
+        'transform 1s ease-in-out, opacity 1s ease-in-out';
+
+      currentSectionElement.style.opacity = '0.5';
+
+      setTimeout(() => {
+        overlay.style.transform = 'translateY(0)';
+
+        setTimeout(() => {
+          currentSectionElement.style.opacity = '0';
+          currentSectionElement.style.visibility = 'hidden';
+
+          callback();
+
+          const nextSectionElement = this.sections[
+            this.currentSection
+          ] as HTMLElement;
+          nextSectionElement.style.visibility = 'visible';
+          nextSectionElement.style.opacity = '0';
+          nextSectionElement.style.transition = 'opacity 1s ease-in-out';
+          setTimeout(() => {
+            nextSectionElement.style.opacity = '1';
+          }, 50);
+
+          overlay.style.transition = 'none';
+          overlay.style.transform = 'translateY(100%)';
+          overlay.style.opacity = '0';
+
+          setTimeout(() => {
+            overlay.style.transition =
+              'transform 1s ease-in-out, opacity 1s ease-in-out';
+            currentSectionElement.style.opacity = '1';
+          }, 100);
+        }, 1000);
+      }, 300);
+    } else {
+      callback();
+    }
+  }
+
+  private lockScroll() {
+    document.body.style.overflow = 'hidden';
+  }
+
+  private unlockScroll() {
+    document.body.style.overflow = 'auto';
+  }
+
+  private scrollToMenuS() {
+    const menuSection = document.getElementById('menu-s');
+    if (menuSection) {
+      menuSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+
+  navigateToVehicles() {
+    const transitionOverlay2 = document.getElementById('transition-overlay2');
+    if (transitionOverlay2) {
+      transitionOverlay2.classList.add('active');
+      setTimeout(() => {
+        this.router.navigate(['/vehicles']).then(() => {
+          setTimeout(() => {
+            transitionOverlay2.classList.remove('active');
+          }, 1000);
+        });
+      }, 1000);
+    }
   }
 }

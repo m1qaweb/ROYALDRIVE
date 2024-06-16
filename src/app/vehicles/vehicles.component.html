@@ -1,0 +1,22 @@
+<div id="vehicles-s" class="vhcl">
+  <h2 class="title-2">OUR VEHICLES</h2>
+  <div class="container">
+    <div class="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item" *ngFor="let car of carouselItems">
+          <div class="card">
+            <img [src]="car.image" alt="{{ car.brand }}" />
+            <div class="card-content">
+              <h3>{{ car.brand }}</h3>
+              <p>{{ car.price }}</p>
+            </div>
+            <div class="card-footer">
+              <button class="btn btn-primary">View Details</button>
+              <button class="btn btn-secondary">Contact Us</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

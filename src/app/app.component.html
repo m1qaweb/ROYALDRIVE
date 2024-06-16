@@ -1,5 +1,11 @@
+<!-- <div class="loading-icon">
+  <span class="loading-text">R</span>
+</div>
+< -->
+<div id="transition-overlay" class="transition-overlay"></div>
+<div id="transition-overlay2" class="transition-overlay2"></div>
 <div id="fullpage">
-  <div class="section" id="section1">
+  <div class="section" id="main-s">
     <app-header></app-header>
     <app-background-video></app-background-video>
     <div class="hero-text">
@@ -9,47 +15,21 @@
     <div class="scroll-down">SCROLL DOWN</div>
   </div>
   <img src="assets/images/main-bg.mp4" alt="" />
-  <div class="section" id="section2">
-    <div class="title-2">
-      <h2>Vehicles</h2>
-    </div>
-    <div class="container">
-      <div class="carousel">
-        <div class="carousel-inner">
-          <div
-            *ngFor="let item of carouselItems; let i = index"
-            class="carousel-item"
-            [class.active]="i === currentSlide"
-          >
-            <div class="card">
-              <img [src]="item.image" alt="{{ item.brand }}" />
-              <div class="card-content">
-                <h3>{{ item.brand }}</h3>
-                <p>{{ item.price }}</p>
-              </div>
-              <div class="card-footer">
-                <button class="btn btn-primary">View Details</button>
-                <button class="btn btn-secondary">Book Now</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="section" id="section3">
-    <img id="bg-video" src="assets/images/menu-bg.gif" alt="" />
+  <div class="section" id="menu-s">
+    <img id="bg-video" src="assets/images/car-driver.png" alt="" />
     <div class="overlay-container">
-      <a href="#">Link 1</a>
-      <a href="#">Link 2</a>
-      <a href="#">Link 3</a>
+      <a (click)="navigateToVehicles()">VEHICLES</a>
+      <a href="#" class="menu-mid">CUSTOMER GALLERY</a>
+      <a href="#">DRIVERS</a>
     </div>
   </div>
+  <app-footer></app-footer>
 </div>
-<div class="indicators">
+<div *ngIf="isVehiclesRoute">
+  <app-vehicles></app-vehicles>
+</div>
+<router-outlet></router-outlet>
+<div *ngIf="!isVehiclesRoute" class="indicators">
   <div class="indicator" id="Home"></div>
-  <div class="indicator" id="Vehicles"></div>
   <div class="indicator" id="Menu"></div>
 </div>
-
-<app-footer></app-footer>
