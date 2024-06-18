@@ -1,13 +1,33 @@
-import { Component, AfterViewInit, Renderer2, ElementRef } from '@angular/core';
+import {
+  Component,
+  AfterViewInit,
+  Renderer2,
+  ElementRef,
+  OnInit,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { LottieAnimationComponent } from '../lottie-animation/lottie-animation.component';
+import { CarService } from '../car.service';
+import { CarDetailsComponent } from '../car-details/car-details.component';
 
 interface Car {
-  brand: string;
+  id: number;
+  make: string;
+  model: string;
+  year: number;
+  color: string;
+  mileage: number;
+  price: number;
+  fuelType: string;
+  transmission: string;
+  engine: string;
+  horsepower: number;
+  features: string[];
+  owners: number;
   image: string;
-  price: string;
 }
 
 @Component({
@@ -15,31 +35,57 @@ interface Car {
   standalone: true,
   templateUrl: './vehicles.component.html',
   styleUrls: ['./vehicles.component.scss'],
-  imports: [CommonModule, HttpClientModule, LottieAnimationComponent],
+  imports: [
+    CommonModule,
+    HttpClientModule,
+    MatDialogModule,
+    LottieAnimationComponent,
+  ],
 })
-export class VehiclesComponent implements AfterViewInit {
+export class VehiclesComponent implements OnInit, AfterViewInit {
   currentSlide: number = 0;
-  carouselItems: Car[] = [
-    { brand: 'BMW', image: 'assets/images/bmw.jpg', price: '$50,000' },
-    { brand: 'Audi', image: 'assets/images/audi.jpg', price: '$60,000' },
-    {
-      brand: 'Mercedes',
-      image: 'assets/images/mercedes.jpg',
-      price: '$70,000',
-    },
-    { brand: 'Tesla', image: 'assets/images/tesla.jpg', price: '$80,000' },
-    { brand: 'Porsche', image: 'assets/images/porsche.jpg', price: '$90,000' },
-  ];
+  carouselItems: Car[] = [];
+  displayedItems: Car[] = [];
+  slideWidth: number = 100 / 3; // Assuming 3 slides visible at once
 
   constructor(
     private renderer: Renderer2,
     private el: ElementRef,
-    private router: Router
+    private router: Router,
+    private carService: CarService,
+    public dialog: MatDialog
   ) {}
 
+  ngOnInit() {
+    this.fetchCars();
+  }
+
   ngAfterViewInit() {
-    this.cloneCarouselItems();
     this.startCarousel();
+  }
+
+  private fetchCars() {
+    this.carService.getCars().subscribe(
+      (cars) => {
+        this.carouselItems = cars.slice(0, 12); // Only get the first 12 cars
+        this.prepareDisplayedItems();
+      },
+      (error) => {
+        console.error('Error fetching car data:', error);
+      }
+    );
+  }
+
+  private prepareDisplayedItems() {
+    // Clone the original items to simulate infinite looping
+    this.displayedItems = [
+      ...this.carouselItems,
+      ...this.carouselItems,
+      ...this.carouselItems,
+    ];
+    setTimeout(() => {
+      this.cloneCarouselItems();
+    });
   }
 
   private cloneCarouselItems() {
@@ -73,14 +119,14 @@ export class VehiclesComponent implements AfterViewInit {
     this.currentSlide++;
     carouselInner.style.transition = 'transform 0.8s ease-in-out';
     carouselInner.style.transform = `translateX(-${
-      (this.currentSlide + 3) * (100 / 3)
+      (this.currentSlide + 3) * this.slideWidth
     }%)`;
 
-    if (this.currentSlide === this.carouselItems.length) {
+    if (this.currentSlide >= this.carouselItems.length) {
       setTimeout(() => {
         carouselInner.style.transition = 'none';
         this.currentSlide = 0;
-        carouselInner.style.transform = `translateX(-${3 * (100 / 3)}%)`;
+        carouselInner.style.transform = `translateX(-${3 * this.slideWidth}%)`;
       }, 800);
     }
   }
@@ -97,5 +143,11 @@ export class VehiclesComponent implements AfterViewInit {
         });
       }, 1000);
     }
+  }
+
+  viewDetails(car: Car) {
+    this.dialog.open(CarDetailsComponent, {
+      data: car,
+    });
   }
 }

@@ -1,0 +1,19 @@
+<div class="dialog-header">
+  <button mat-icon-button class="close-button" (click)="close()">
+    <i class="bi bi-x-lg"></i>
+  </button>
+  <h1 mat-dialog-title>{{ data.make }} {{ data.model }}</h1>
+</div>
+<div mat-dialog-content>
+  <img [src]="data.image" alt="{{ data.make }} {{ data.model }}" />
+  <p>Year: {{ data.year }}</p>
+  <p>Color: {{ data.color }}</p>
+  <p>Mileage: {{ data.mileage }} miles</p>
+  <p>Price: {{ data.price }}</p>
+  <p>Fuel Type: {{ data.fuelType }}</p>
+  <p>Transmission: {{ data.transmission }}</p>
+  <p>Engine: {{ data.engine }}</p>
+  <p>Horsepower: {{ data.horsepower }} HP</p>
+  <p>Features: {{ data.features.join(", ") }}</p>
+  <p>Owners: {{ data.owners }}</p>
+</div>
