@@ -1,33 +1,11 @@
-<!-- <div class="loading-icon">
-  <span class="loading-text">R</span>
+<div id="loading-screen" class="loading-screen">
+  <div class="loading-icon">
+    <span class="loading-text">R</span>
+  </div>
 </div>
-< -->
 <div id="transition-overlay" class="transition-overlay"></div>
 <div id="transition-overlay2" class="transition-overlay2"></div>
-<div id="fullpage">
-  <div class="section" id="main-s">
-    <app-header></app-header>
-    <app-background-video></app-background-video>
-    <div class="hero-text">
-      Luxury rentals, delivered with impeccable service.
-    </div>
-    <app-lottie-animation></app-lottie-animation>
-    <div class="scroll-down">SCROLL DOWN</div>
-  </div>
-  <img src="assets/images/main-bg.mp4" alt="" />
-  <div class="section" id="menu-s">
-    <img id="bg-video" src="assets/images/car-driver.png" alt="" />
-    <div class="overlay-container">
-      <a (click)="navigateToVehicles()">VEHICLES</a>
-      <a href="#" class="menu-mid">CUSTOMER GALLERY</a>
-      <a href="#">DRIVERS</a>
-    </div>
-  </div>
-  <app-footer></app-footer>
-</div>
-<div *ngIf="isVehiclesRoute">
-  <app-vehicles></app-vehicles>
-</div>
+
 <router-outlet></router-outlet>
 <div *ngIf="!isVehiclesRoute" class="indicators">
   <div class="indicator" id="Home"></div>

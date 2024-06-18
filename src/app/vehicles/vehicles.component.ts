@@ -1,6 +1,8 @@
 import { Component, AfterViewInit, Renderer2, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { LottieAnimationComponent } from '../lottie-animation/lottie-animation.component';
 
 interface Car {
   brand: string;
@@ -13,7 +15,7 @@ interface Car {
   standalone: true,
   templateUrl: './vehicles.component.html',
   styleUrls: ['./vehicles.component.scss'],
-  imports: [CommonModule, HttpClientModule],
+  imports: [CommonModule, HttpClientModule, LottieAnimationComponent],
 })
 export class VehiclesComponent implements AfterViewInit {
   currentSlide: number = 0;
@@ -29,7 +31,11 @@ export class VehiclesComponent implements AfterViewInit {
     { brand: 'Porsche', image: 'assets/images/porsche.jpg', price: '$90,000' },
   ];
 
-  constructor(private renderer: Renderer2, private el: ElementRef) {}
+  constructor(
+    private renderer: Renderer2,
+    private el: ElementRef,
+    private router: Router
+  ) {}
 
   ngAfterViewInit() {
     this.cloneCarouselItems();
@@ -76,6 +82,20 @@ export class VehiclesComponent implements AfterViewInit {
         this.currentSlide = 0;
         carouselInner.style.transform = `translateX(-${3 * (100 / 3)}%)`;
       }, 800);
+    }
+  }
+
+  navigateToHome() {
+    const transitionOverlay3 = document.getElementById('transition-overlay3');
+    if (transitionOverlay3) {
+      transitionOverlay3.classList.add('active');
+      setTimeout(() => {
+        this.router.navigate(['']).then(() => {
+          setTimeout(() => {
+            transitionOverlay3.classList.remove('active');
+          }, 1000);
+        });
+      }, 1000);
     }
   }
 }

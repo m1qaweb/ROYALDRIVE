@@ -1,0 +1,17 @@
+<div id="fullpage">
+  <div class="section" id="main-s">
+    <app-header></app-header>
+    <app-background-video></app-background-video>
+    <div class="hero-text">
+      Luxury rentals, delivered with impeccable service.
+    </div>
+    <app-lottie-animation *ngIf="isMainRoute"></app-lottie-animation>
+    <div class="scroll-down">SCROLL DOWN</div>
+  </div>
+  <img src="assets/images/main-bg.mp4" alt="" />
+  <app-menu></app-menu>
+  <app-footer></app-footer>
+</div>
+<div *ngIf="isVehiclesRoute">
+  <app-vehicles></app-vehicles>
+</div>
