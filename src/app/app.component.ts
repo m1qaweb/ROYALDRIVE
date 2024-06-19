@@ -31,7 +31,6 @@ import { MenuComponent } from './menu/menu.component';
     BackgroundVideoComponent,
     LottieAnimationComponent,
     RouterModule,
-
     MenuComponent,
   ],
 })

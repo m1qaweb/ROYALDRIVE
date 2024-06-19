@@ -46,7 +46,23 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
   currentSlide: number = 0;
   carouselItems: Car[] = [];
   displayedItems: Car[] = [];
-  slideWidth: number = 100 / 3; // Assuming 3 slides visible at once
+  slideWidth: number = 100 / 3;
+  private carouselInterval: any;
+
+  private modelImageMap: { [key: string]: string } = {
+    'Audi Q5': 'assets/images/audi-q5.jpg',
+    'Chevrolet Tahoe': 'assets/images/chevrolet-tahoe.jpg',
+    'Subaru Outback': 'assets/images/subaru-outback.jpg',
+    'Lexus RX 350': 'assets/images/lexus-rx-350.jpg',
+    'BMW 3 Series': 'assets/images/bmw-3-series.jpg',
+    'Tesla Model 3': 'assets/images/tesla-model-3.jpg',
+    'Toyota Corolla': 'assets/images/toyota-corolla.jpg',
+    'Ford Mustang': 'assets/images/ford-mustang.jpg',
+    'Nissan Altima': 'assets/images/nissan-altima.jpg',
+    'Mercedes-Benz E-Class': 'assets/images/mercedes-benz.jpg',
+    'Honda Civic': 'assets/images/honda-civic.jpg',
+    'Chevrolet Equinox': 'assets/images/chevrolet-equinox.jpg',
+  };
 
   constructor(
     private renderer: Renderer2,
@@ -67,7 +83,12 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
   private fetchCars() {
     this.carService.getCars().subscribe(
       (cars) => {
-        this.carouselItems = cars.slice(0, 12); // Only get the first 12 cars
+        this.carouselItems = cars.slice(0, 12).map((car) => ({
+          ...car,
+          image:
+            this.modelImageMap[`${car.make} ${car.model}`] ||
+            'default-image-path.jpg',
+        }));
         this.prepareDisplayedItems();
       },
       (error) => {
@@ -77,7 +98,6 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
   }
 
   private prepareDisplayedItems() {
-    // Clone the original items to simulate infinite looping
     this.displayedItems = [
       ...this.carouselItems,
       ...this.carouselItems,
@@ -106,9 +126,13 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
   }
 
   startCarousel() {
-    setInterval(() => {
+    this.carouselInterval = setInterval(() => {
       this.nextSlide();
     }, 3000);
+  }
+
+  stopCarousel() {
+    clearInterval(this.carouselInterval);
   }
 
   nextSlide() {
@@ -145,9 +169,30 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
     }
   }
 
-  viewDetails(car: Car) {
-    this.dialog.open(CarDetailsComponent, {
-      data: car,
-    });
+  viewDetails(car: Car, event: MouseEvent) {
+    const target = event.target as HTMLElement;
+    const cardElement = target.closest('.card') as HTMLElement;
+
+    if (cardElement) {
+      const rect = cardElement.getBoundingClientRect();
+      this.stopCarousel();
+      const dialogRef = this.dialog.open(CarDetailsComponent, {
+        data: car,
+        panelClass: 'custom-dialog-container',
+        width: `${rect.width}px`,
+        height: `${rect.height}px`,
+        position: {
+          top: `${rect.top}px`,
+          left: `${rect.left}px`,
+        },
+        backdropClass: 'transparent-backdrop',
+      });
+
+      dialogRef.componentInstance.setCardElement(cardElement);
+
+      dialogRef.afterClosed().subscribe(() => {
+        this.startCarousel();
+      });
+    }
   }
 }

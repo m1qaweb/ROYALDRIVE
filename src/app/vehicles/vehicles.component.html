@@ -20,10 +20,13 @@
               <p>{{ car.price | currency }}</p>
             </div>
             <div class="card-footer">
-              <button class="btn btn-primary" (click)="viewDetails(car)">
+              <button
+                class="btn btn-primary"
+                (click)="viewDetails(car, $event)"
+              >
                 View Details
               </button>
-              <button class="btn btn-secondary">Contact Us</button>
+              <button class="btn btn-secondary">Book Now</button>
             </div>
           </div>
         </div>

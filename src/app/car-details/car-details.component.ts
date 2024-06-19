@@ -1,8 +1,7 @@
-import { Component, Inject, Input } from '@angular/core';
+import { Component, Inject, HostListener, AfterViewInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 interface Car {
-  id: number;
   make: string;
   model: string;
   year: number;
@@ -15,7 +14,6 @@ interface Car {
   horsepower: number;
   features: string[];
   owners: number;
-  image: string;
 }
 
 @Component({
@@ -24,17 +22,39 @@ interface Car {
   templateUrl: './car-details.component.html',
   styleUrls: ['./car-details.component.scss'],
 })
-export class CarDetailsComponent {
-  @Input() data: Car;
+export class CarDetailsComponent implements AfterViewInit {
+  private cardElement: HTMLElement | null = null;
 
   constructor(
-    public dialogRef: MatDialogRef<CarDetailsComponent>,
-    @Inject(MAT_DIALOG_DATA) public dialogData: any
-  ) {
-    this.data = dialogData;
+    @Inject(MAT_DIALOG_DATA) public data: Car,
+    private dialogRef: MatDialogRef<CarDetailsComponent>
+  ) {}
+
+  ngAfterViewInit() {
+    this.updateDialogPositionAndSize();
   }
 
-  close(): void {
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.updateDialogPositionAndSize();
+  }
+
+  close() {
     this.dialogRef.close();
+  }
+
+  setCardElement(cardElement: HTMLElement) {
+    this.cardElement = cardElement;
+  }
+
+  private updateDialogPositionAndSize() {
+    if (!this.cardElement) return;
+
+    const rect = this.cardElement.getBoundingClientRect();
+    this.dialogRef.updateSize(`${rect.width}px`, `${rect.height}px`);
+    this.dialogRef.updatePosition({
+      top: `${rect.top}px`,
+      left: `${rect.left}px`,
+    });
   }
 }
