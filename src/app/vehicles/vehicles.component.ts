@@ -4,6 +4,7 @@ import {
   Renderer2,
   ElementRef,
   OnInit,
+  OnDestroy,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
@@ -42,11 +43,12 @@ interface Car {
     LottieAnimationComponent,
   ],
 })
-export class VehiclesComponent implements OnInit, AfterViewInit {
+export class VehiclesComponent implements OnInit, AfterViewInit, OnDestroy {
   currentSlide: number = 0;
   carouselItems: Car[] = [];
   displayedItems: Car[] = [];
   slideWidth: number = 100 / 3;
+  carouselItemsPerSlide: number = 3;
   private carouselInterval: any;
 
   private modelImageMap: { [key: string]: string } = {
@@ -74,10 +76,17 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.fetchCars();
+    this.updateCarouselItems();
+    window.addEventListener('resize', this.updateCarouselItems.bind(this));
   }
 
   ngAfterViewInit() {
     this.startCarousel();
+  }
+
+  ngOnDestroy() {
+    window.removeEventListener('resize', this.updateCarouselItems.bind(this));
+    this.stopCarousel();
   }
 
   private fetchCars() {
@@ -143,15 +152,46 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
     this.currentSlide++;
     carouselInner.style.transition = 'transform 0.8s ease-in-out';
     carouselInner.style.transform = `translateX(-${
-      (this.currentSlide + 3) * this.slideWidth
+      (this.currentSlide + this.carouselItemsPerSlide) * this.slideWidth
     }%)`;
 
     if (this.currentSlide >= this.carouselItems.length) {
       setTimeout(() => {
         carouselInner.style.transition = 'none';
         this.currentSlide = 0;
-        carouselInner.style.transform = `translateX(-${3 * this.slideWidth}%)`;
+        carouselInner.style.transform = `translateX(-${
+          this.carouselItemsPerSlide * this.slideWidth
+        }%)`;
       }, 800);
+    }
+  }
+
+  private updateCarouselItems() {
+    const width = window.innerWidth;
+
+    if (width <= 568) {
+      this.carouselItemsPerSlide = 1;
+    } else if (width <= 1015) {
+      this.carouselItemsPerSlide = 2;
+    } else {
+      this.carouselItemsPerSlide = 3;
+    }
+
+    this.slideWidth = 100 / this.carouselItemsPerSlide;
+
+    const carouselInner =
+      this.el.nativeElement.querySelector('.carousel-inner');
+    if (carouselInner) {
+      carouselInner.style.transition = 'none';
+      carouselInner.style.transform = `translateX(-${
+        this.currentSlide * this.slideWidth
+      }%)`;
+
+      if (this.carouselItems.length === 1) {
+        carouselInner.style.justifyContent = 'center';
+      } else {
+        carouselInner.style.justifyContent = 'flex-start';
+      }
     }
   }
 
@@ -163,9 +203,9 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
         this.router.navigate(['']).then(() => {
           setTimeout(() => {
             transitionOverlay3.classList.remove('active');
-          }, 1000);
+          }, 1500);
         });
-      }, 1000);
+      }, 1500);
     }
   }
 

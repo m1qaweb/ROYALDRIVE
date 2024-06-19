@@ -20,6 +20,10 @@
   height: 100%;
   box-sizing: border-box;
   position: relative;
+  overflow: hidden;
+  @media (max-width: 768px) {
+    padding: 10px;
+  }
 }
 
 .close-button {
@@ -30,10 +34,12 @@
   border: none;
   color: white;
   cursor: pointer;
+
   i {
     font-size: 22px;
   }
 }
+
 .full-details {
   font-family: "Playfair Display", serif;
   display: flex;
@@ -41,7 +47,42 @@
   align-items: center;
   flex-direction: column;
   gap: 1rem;
+  overflow: hidden;
+  @media (max-width: 768px) {
+    gap: 0.7rem;
+  }
+
+  @media (max-width: 420px) {
+    gap: 0.5rem;
+  }
+
+  h2 {
+    text-align: center;
+    margin-bottom: 10px;
+    font-weight: bolder;
+    @media (max-width: 768px) {
+      margin: 0;
+      font-size: 1.1rem;
+    }
+
+    @media (max-width: 420px) {
+      font-size: 0.9rem;
+      margin: 0;
+    }
+  }
+
   p {
     margin-top: 3px;
+    word-wrap: break-word;
+    text-align: center;
+    @media (max-width: 768px) {
+      font-size: 0.95rem;
+      margin: 0;
+    }
+
+    @media (max-width: 420px) {
+      font-size: 0.77rem;
+      margin: 0;
+    }
   }
 }

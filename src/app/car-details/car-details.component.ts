@@ -17,7 +17,6 @@ interface Car {
 }
 
 @Component({
-  standalone: true,
   selector: 'app-car-details',
   templateUrl: './car-details.component.html',
   styleUrls: ['./car-details.component.scss'],
