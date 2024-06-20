@@ -2,7 +2,7 @@
   <h2>{{ data.make }} {{ data.model }}</h2>
   <p>Year: {{ data.year }}</p>
   <p>Mileage: {{ data.mileage }} miles</p>
-  <p>Price: {{ data.price }}$</p>
+  <p>Price: {{ data.price / 200 | number : "1.2-2" }}$ Per Day</p>
   <p>Fuel Type: {{ data.fuelType }}</p>
   <p>Transmission: {{ data.transmission }}</p>
   <p>Engine: {{ data.engine }}</p>

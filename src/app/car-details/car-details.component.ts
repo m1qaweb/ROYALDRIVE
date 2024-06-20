@@ -1,6 +1,6 @@
 import { Component, Inject, HostListener, AfterViewInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-
+import { CommonModule } from '@angular/common';
 interface Car {
   make: string;
   model: string;
@@ -17,9 +17,11 @@ interface Car {
 }
 
 @Component({
+  standalone: true,
   selector: 'app-car-details',
   templateUrl: './car-details.component.html',
   styleUrls: ['./car-details.component.scss'],
+  imports: [CommonModule],
 })
 export class CarDetailsComponent implements AfterViewInit {
   private cardElement: HTMLElement | null = null;

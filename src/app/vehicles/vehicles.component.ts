@@ -5,6 +5,8 @@ import {
   ElementRef,
   OnInit,
   OnDestroy,
+  ComponentFactoryResolver,
+  ViewContainerRef,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
@@ -13,6 +15,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { LottieAnimationComponent } from '../lottie-animation/lottie-animation.component';
 import { CarService } from '../car.service';
 import { CarDetailsComponent } from '../car-details/car-details.component';
+import { BookNowComponent } from '../book-now/book-now.component';
 
 interface Car {
   id: number;
@@ -71,7 +74,9 @@ export class VehiclesComponent implements OnInit, AfterViewInit, OnDestroy {
     private el: ElementRef,
     private router: Router,
     private carService: CarService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private componentFactoryResolver: ComponentFactoryResolver,
+    private viewContainerRef: ViewContainerRef
   ) {}
 
   ngOnInit() {
@@ -137,7 +142,7 @@ export class VehiclesComponent implements OnInit, AfterViewInit, OnDestroy {
   startCarousel() {
     this.carouselInterval = setInterval(() => {
       this.nextSlide();
-    }, 3000);
+    }, 2500);
   }
 
   stopCarousel() {
@@ -234,5 +239,23 @@ export class VehiclesComponent implements OnInit, AfterViewInit, OnDestroy {
         this.startCarousel();
       });
     }
+  }
+
+  bookNow(car: Car, event: MouseEvent) {
+    const existingBookNowElement = document.getElementById('book-now');
+    if (existingBookNowElement) {
+      existingBookNowElement.remove();
+    }
+
+    const bookNowFactory =
+      this.componentFactoryResolver.resolveComponentFactory(BookNowComponent);
+    const bookNowComponentRef =
+      this.viewContainerRef.createComponent(bookNowFactory);
+    bookNowComponentRef.instance.data = car;
+
+    const hostElement = bookNowComponentRef.location.nativeElement;
+    hostElement.id = 'book-now';
+
+    this.renderer.appendChild(this.el.nativeElement, hostElement);
   }
 }
