@@ -37,23 +37,9 @@ export class HomeComponent implements AfterViewInit {
   currentSection: number = 0;
   sections!: NodeListOf<HTMLElement>;
   private isScrolling = false;
-  public isVehiclesRoute = false;
   public isMainRoute = false;
 
-  constructor(private renderer: Renderer2, private router: Router) {
-    this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        this.isVehiclesRoute = event.urlAfterRedirects === '/vehicles';
-        this.isMainRoute = event.urlAfterRedirects === '/';
-        if (this.isVehiclesRoute) {
-          this.lockScroll();
-          this.scrollToMenuS();
-        } else {
-          this.unlockScroll();
-        }
-      }
-    });
-  }
+  constructor(private renderer: Renderer2, private router: Router) {}
 
   ngAfterViewInit() {
     this.sections = document.querySelectorAll(
@@ -66,7 +52,7 @@ export class HomeComponent implements AfterViewInit {
 
   @HostListener('window:wheel', ['$event'])
   onScroll(event: WheelEvent) {
-    if (this.isScrolling || this.isVehiclesRoute) return;
+    if (this.isScrolling) return;
 
     this.isScrolling = true;
     setTimeout(() => (this.isScrolling = false), 1500);
@@ -207,38 +193,6 @@ export class HomeComponent implements AfterViewInit {
       }, 300);
     } else {
       callback();
-    }
-  }
-
-  private lockScroll() {
-    document.body.style.overflow = 'hidden';
-  }
-
-  private unlockScroll() {
-    document.body.style.overflow = 'auto';
-  }
-
-  private scrollToMenuS() {
-    const menuSection = document.getElementById('menu-s');
-    if (menuSection) {
-      menuSection.scrollIntoView({ behavior: 'smooth' });
-    }
-  }
-
-  navigateToVehicles() {
-    const transitionOverlay2 = document.getElementById('transition-overlay2');
-    const menuSection = document.getElementById('menu-s');
-
-    if (transitionOverlay2 && menuSection) {
-      transitionOverlay2.classList.add('active');
-
-      setTimeout(() => {
-        menuSection.style.visibility = 'hidden';
-
-        setTimeout(() => {
-          window.location.href = '/vehicles';
-        }, 1000);
-      }, 1000);
     }
   }
 }

@@ -20,7 +20,7 @@ export class PopupComponent implements OnInit, OnDestroy {
   @Input() type: 'success' | 'error' = 'success';
   @Output() close = new EventEmitter<void>();
 
-  countdown: number = 3;
+  countdown: number = 4;
   private countdownInterval: any;
 
   ngOnInit() {

@@ -25,6 +25,7 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
   sections!: NodeListOf<HTMLElement>;
   private isScrolling = false;
   public isVehiclesRoute = false;
+  public isDriversRoute = false;
   public isMainRoute = false;
   private navigationSubscription!: Subscription;
 
@@ -35,7 +36,9 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
       if (event instanceof NavigationEnd) {
         this.isVehiclesRoute = event.urlAfterRedirects === '/vehicles';
         this.isMainRoute = event.urlAfterRedirects === '/';
-        if (this.isVehiclesRoute) {
+        this.isDriversRoute = event.urlAfterRedirects === '/drivers';
+
+        if (this.isVehiclesRoute || this.isDriversRoute) {
           this.lockScroll();
           this.scrollToMenuS();
         } else {
@@ -237,6 +240,23 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
 
         setTimeout(() => {
           window.location.href = '/vehicles';
+        }, 1000);
+      }, 1000);
+    }
+  }
+
+  navigateToDrivers() {
+    const transitionOverlay2 = document.getElementById('transition-overlay2');
+    const menuSection = document.getElementById('menu-s');
+
+    if (transitionOverlay2 && menuSection) {
+      transitionOverlay2.classList.add('active');
+
+      setTimeout(() => {
+        menuSection.style.visibility = 'hidden';
+
+        setTimeout(() => {
+          window.location.href = '/drivers';
         }, 1000);
       }, 1000);
     }

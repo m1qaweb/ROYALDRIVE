@@ -39,6 +39,7 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
   sections!: NodeListOf<HTMLElement>;
 
   public isVehiclesRoute = false;
+  public isDriversRoute = false;
   public isMainRoute = false;
   private navigationSubscription!: Subscription;
 
@@ -49,7 +50,9 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
       if (event instanceof NavigationEnd) {
         this.isVehiclesRoute = event.urlAfterRedirects === '/vehicles';
         this.isMainRoute = event.urlAfterRedirects === '/';
-        if (this.isVehiclesRoute) {
+        this.isDriversRoute = event.urlAfterRedirects === '/drivers';
+
+        if (this.isVehiclesRoute || this.isDriversRoute) {
           this.lockScroll();
           this.scrollToMenuS();
         } else {
@@ -64,8 +67,6 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
       '.section'
     ) as NodeListOf<HTMLElement>;
 
-    this.observeSections();
-    this.updateIndicators();
     this.hideLoadingScreen();
   }
 
@@ -73,42 +74,6 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
     if (this.navigationSubscription) {
       this.navigationSubscription.unsubscribe();
     }
-  }
-
-  private observeSections() {
-    this.sections.forEach((section) => {
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              section.classList.add('in-view');
-              if (section.id === 'menu-s') {
-                section.classList.add('active');
-              }
-            } else {
-              section.classList.remove('in-view');
-              if (section.id === 'menu-s') {
-                section.classList.remove('active');
-              }
-            }
-          });
-        },
-        { threshold: 0.5 }
-      );
-      observer.observe(section);
-    });
-  }
-
-  private updateIndicators() {
-    const indicators = document.querySelectorAll('.indicator');
-    indicators.forEach((indicator, index) => {
-      const indicatorElement = indicator as HTMLElement;
-      if (index === this.currentSection) {
-        indicatorElement.classList.add('active');
-      } else {
-        indicatorElement.classList.remove('active');
-      }
-    });
   }
 
   private hideLoadingScreen() {
@@ -155,23 +120,6 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
     const menuSection = document.getElementById('menu-s');
     if (menuSection) {
       menuSection.scrollIntoView({ behavior: 'smooth' });
-    }
-  }
-
-  navigateToVehicles() {
-    const transitionOverlay2 = document.getElementById('transition-overlay2');
-    const menuSection = document.getElementById('menu-s');
-
-    if (transitionOverlay2 && menuSection) {
-      transitionOverlay2.classList.add('active');
-
-      setTimeout(() => {
-        menuSection.style.visibility = 'hidden';
-
-        setTimeout(() => {
-          window.location.href = '/vehicles';
-        }, 1000);
-      }, 1000);
     }
   }
 }

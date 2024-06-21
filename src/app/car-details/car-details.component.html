@@ -1,4 +1,9 @@
-<div class="full-details" [@dialog]>
+<div
+  class="modal-backdrop"
+  (click)="close()"
+  [@backdropAnimation]="modalState"
+></div>
+<div class="full-details" [@modalAnimation]="modalState">
   <h2>{{ data.make }} {{ data.model }}</h2>
   <p>Year: {{ data.year }}</p>
   <p>Mileage: {{ data.mileage }} miles</p>
