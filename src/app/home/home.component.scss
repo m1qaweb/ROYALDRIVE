@@ -42,8 +42,32 @@
       font-size: 2rem;
       text-align: center;
       user-select: none;
+      letter-spacing: 0.1rem;
       font-family: "Playfair Display", serif;
       animation: fadeInUp 1.2s ease-in-out both;
+      @media (max-width: 962px) {
+        font-size: 1.7rem;
+      }
+      @media (max-width: 878px) {
+        font-size: 1.5rem;
+      }
+      @media (max-width: 710px) {
+        margin-left: 2.2rem;
+        font-size: 1.3rem;
+        word-wrap: break-word;
+        width: 90%;
+      }
+      @media (max-width: 500px) {
+        font-size: 1.2rem;
+        margin-left: 1.69rem;
+      }
+      @media (max-width: 472px) {
+        font-size: 1.1rem;
+        margin-left: 1.32rem;
+      }
+      @media (max-width: 350px) {
+        font-size: 1rem;
+      }
     }
 
     .scroll-down {
@@ -58,6 +82,9 @@
       user-select: none;
       font-family: "Playfair Display", serif;
       animation: fadeInUp 1.2s ease-in-out both;
+      @media (max-width: 476px) {
+        font-size: 0.7rem;
+      }
     }
 
     .title-2 {

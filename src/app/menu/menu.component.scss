@@ -25,6 +25,11 @@
     transition: filter 1.2s ease-in-out, transform 3s ease-in-out;
     transform: scale(1);
   }
+  img {
+    @media (max-width: 960px) {
+      display: none;
+    }
+  }
 
   &.active {
     img#bg-video {
@@ -49,6 +54,10 @@
     background-color: rgba(0, 0, 0, 0.74);
     opacity: 0;
     z-index: 10;
+    @media (max-width: 960px) {
+      flex-direction: column;
+      gap: 3rem;
+    }
 
     a {
       color: white;
@@ -57,6 +66,14 @@
       padding: 30px 60px;
       transition: background-color 0.3s ease;
       cursor: pointer;
+      @media (max-width: 1100px) {
+        padding: 20px 50px;
+        font-size: 17px;
+      }
+      @media (max-width: 658px) {
+        padding: 15px 35px;
+        font-size: 15px;
+      }
     }
 
     .menu-mid {

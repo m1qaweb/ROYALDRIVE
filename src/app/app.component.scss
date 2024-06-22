@@ -69,12 +69,23 @@
     align-items: center;
     justify-content: center;
     position: relative;
+    @media (max-width: 1040px) {
+      width: 10px;
+      height: 10px;
+    }
+    @media (max-width: 638px) {
+      display: none;
+    }
   }
 
   .indicator.active {
     width: 19px;
     height: 19px;
     background: #000;
+    @media (max-width: 1040px) {
+      width: 14px;
+      height: 14px;
+    }
   }
 
   .indicator::after {
@@ -89,6 +100,13 @@
     opacity: 0;
     transition: opacity 0.3s, transform 0.3s;
     transform: translateX(10px);
+    @media (max-width: 1040px) {
+      font-size: 14px;
+      left: -40px;
+    }
+    @media (max-width: 771px) {
+      display: none;
+    }
   }
 
   .indicator.active::after,

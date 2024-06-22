@@ -4,6 +4,24 @@
   position: absolute;
   bottom: -9.52%;
   left: 0%;
+  z-index: 100;
+  @media (max-width: 771.99px) {
+    display: none;
+  }
+}
+#animation-mbscroll {
+  width: 100%;
+  height: 100px;
+  position: absolute;
+  bottom: 7%;
+  left: 0%;
+  z-index: 100;
+  @media (min-width: 771.98px) {
+    display: none;
+  }
+  @media (max-width: 476px) {
+    height: 60px;
+  }
 }
 #animation-arrow {
   width: 100%;

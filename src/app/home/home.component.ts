@@ -5,9 +5,8 @@ import {
   Renderer2,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, NavigationEnd } from '@angular/router';
+import { Router } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
-
 import { BackgroundVideoComponent } from '../background-video/background-video.component';
 import { LottieAnimationComponent } from '../lottie-animation/lottie-animation.component';
 import { VehiclesComponent } from '../vehicles/vehicles.component';

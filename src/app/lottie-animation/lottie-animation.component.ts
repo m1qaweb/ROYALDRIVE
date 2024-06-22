@@ -14,17 +14,20 @@ import lottie from 'lottie-web';
     <div id="animation-container" *ngIf="showContainer"></div>
     <div id="animation-arrow" *ngIf="showArrow"></div>
     <div id="animation-scroll" *ngIf="showScroll"></div>
+    <div id="animation-mbscroll" *ngIf="showmbScroll"></div>
   `,
   styleUrls: ['./lottie-animation.component.scss'],
   standalone: true,
   imports: [CommonModule],
 })
 export class LottieAnimationComponent implements AfterViewInit {
-  @Input() animationType: 'container' | 'arrow' | 'scroll' = 'container';
+  @Input() animationType: 'container' | 'arrow' | 'mbscroll' | 'scroll' =
+    'container';
 
   showContainer = false;
   showArrow = false;
   showScroll = false;
+  showmbScroll = false;
 
   constructor(private el: ElementRef, private cdr: ChangeDetectorRef) {}
 
@@ -62,6 +65,17 @@ export class LottieAnimationComponent implements AfterViewInit {
         loop: true,
         autoplay: true,
         path: 'assets/animations/scroll.json',
+      });
+    }
+    if (this.animationType === 'mbscroll') {
+      this.showmbScroll = true;
+      this.cdr.detectChanges();
+      lottie.loadAnimation({
+        container: this.el.nativeElement.querySelector('#animation-mbscroll'),
+        renderer: 'svg',
+        loop: true,
+        autoplay: true,
+        path: 'assets/animations/swipe-down.json',
       });
     }
   }
