@@ -1,27 +1,18 @@
 # ROYALDRIVE
+Luxury rentals, delivered with impeccable service.
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.0.2.
+Welcome to Royal Drive, your premier car rental service with professional drivers. Our mission is to provide seamless and luxurious transportation solutions tailored to your needs.
 
-## Development server
+## About Us
+At Royal Drive, we understand that every journey is unique. Our diverse fleet of meticulously maintained vehicles and our team of experienced drivers are here to ensure a comfortable, convenient, and enjoyable experience.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Features
+Safety First: Our vehicles are equipped with the latest safety features.
 
-## Code scaffolding
+Wide Range of Vehicles: Choose from a variety of cars, including sedans, SUVs, and limousines.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Professional Drivers: Enjoy a smooth ride with our well-trained, courteous drivers.
 
-## Build
+Easy Reservations: Book your car and driver easily through our user-friendly website.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Competitive Pricing: Premium service at competitive rates.
