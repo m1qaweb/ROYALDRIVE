@@ -26,6 +26,7 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
   private isScrolling = false;
   public isVehiclesRoute = false;
   public isDriversRoute = false;
+  public isCustomerRoute = false;
   public isMainRoute = false;
   private navigationSubscription!: Subscription;
 
@@ -37,8 +38,13 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
         this.isVehiclesRoute = event.urlAfterRedirects === '/vehicles';
         this.isMainRoute = event.urlAfterRedirects === '/';
         this.isDriversRoute = event.urlAfterRedirects === '/drivers';
+        this.isCustomerRoute = event.urlAfterRedirects === '/customer-gallery';
 
-        if (this.isVehiclesRoute || this.isDriversRoute) {
+        if (
+          this.isVehiclesRoute ||
+          this.isDriversRoute ||
+          this.isCustomerRoute
+        ) {
           this.lockScroll();
           this.scrollToMenuS();
         } else {
@@ -257,6 +263,22 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
 
         setTimeout(() => {
           window.location.href = '/drivers';
+        }, 1000);
+      }, 1000);
+    }
+  }
+  navigateToCustomerGallery() {
+    const transitionOverlay2 = document.getElementById('transition-overlay2');
+    const menuSection = document.getElementById('menu-s');
+
+    if (transitionOverlay2 && menuSection) {
+      transitionOverlay2.classList.add('active');
+
+      setTimeout(() => {
+        menuSection.style.visibility = 'hidden';
+
+        setTimeout(() => {
+          window.location.href = '/customer-gallery';
         }, 1000);
       }, 1000);
     }

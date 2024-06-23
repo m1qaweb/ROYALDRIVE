@@ -1,0 +1,56 @@
+<div id="transition-overlay3" class="transition-overlay3"></div>
+<div class="exit" (click)="navigateToHome()">
+  <app-lottie-animation animationType="arrow"></app-lottie-animation>
+  <a>Home</a>
+</div>
+<div class="gallery-container">
+  <div class="grid" @gridAnimation>
+    <ng-container *ngFor="let image of images; let i = index">
+      <div
+        class="grid-item"
+        [ngClass]="getItemClass(i)"
+        (click)="showOverlay(image)"
+        [@gridRoll]="i"
+      >
+        <div class="gallery-card">
+          <div class="card-img front">
+            <img [src]="image.src" />
+          </div>
+          <div class="card-img back">
+            <h4>R</h4>
+            <p>VIEW</p>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+
+  <div
+    class="overlay"
+    *ngIf="overlayImage"
+    [@overlayClose]="overlayClosing ? 'close' : 'open'"
+    (@overlayClose.done)="onOverlayCloseDone()"
+    (click)="hideOverlay()"
+  >
+    <div class="overlay-content" (click)="$event.stopPropagation()">
+      <div
+        class="overlay-card"
+        @overlayImageChange
+        [@overlayImageChange]="currentIndex"
+      >
+        <div class="card-img front">
+          <button class="close-button" (click)="startCloseOverlay($event)">
+            <i class="bi bi-x-lg"></i>
+          </button>
+          <img [src]="overlayImage.src" />
+        </div>
+      </div>
+      <button class="overlay-arrow left" (click)="showPreviousImage($event)">
+        <i class="bi bi-caret-left-fill"></i>
+      </button>
+      <button class="overlay-arrow right" (click)="showNextImage($event)">
+        <i class="bi bi-caret-right-fill"></i>
+      </button>
+    </div>
+  </div>
+</div>

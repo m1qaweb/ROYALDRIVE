@@ -55,8 +55,13 @@ export class BookNowComponent implements OnInit {
 
   handlePayment(event: Event) {
     event.preventDefault();
+    const cardNumber = (
+      document.getElementById('cardNumber') as HTMLInputElement
+    ).value.replace(/\s/g, '');
     if (this.isExpired) {
       this.showPopup('Please enter a valid expiry date.', 'error');
+    } else if (cardNumber.length !== 16) {
+      this.showPopup('Card number must be 16 digits long.', 'error');
     } else {
       const formData = new FormData(event.target as HTMLFormElement);
       const customerDetails = {
@@ -65,12 +70,15 @@ export class BookNowComponent implements OnInit {
         email: formData.get('email'),
         phoneNumber: formData.get('phoneNumber'),
         cardholderName: formData.get('cardholderName'),
-        cardNumber: formData.get('cardNumber'),
+        cardNumber,
         expiryDate: formData.get('expiryDate'),
         cvc: formData.get('cvc'),
       };
       console.log('Payment successful!', customerDetails);
       this.showPopup('Payment successful!', 'success');
+      setTimeout(() => {
+        this.close();
+      }, 3000);
     }
   }
 
@@ -82,6 +90,9 @@ export class BookNowComponent implements OnInit {
 
   closePopup() {
     this.showPopupFlag = false;
+    if (this.popupType === 'success') {
+      this.close();
+    }
   }
 
   close() {
@@ -96,11 +107,10 @@ export class BookNowComponent implements OnInit {
   onInput(event: Event) {
     const inputElement = event.target as HTMLInputElement;
 
-    if (inputElement.id === 'fullName') {
-      inputElement.value = inputElement.value.replace(/[^a-zA-Z\s]/g, '');
-    }
-
-    if (inputElement.id === 'cardholderName') {
+    if (
+      inputElement.id === 'fullName' ||
+      inputElement.id === 'cardholderName'
+    ) {
       inputElement.value = inputElement.value.replace(/[^a-zA-Z\s]/g, '');
     }
 
@@ -126,7 +136,6 @@ export class BookNowComponent implements OnInit {
 
     if (inputElement.id === 'expiryDate') {
       let input = inputElement.value.replace(/\D/g, '');
-
       if (input.length <= 2) {
         if (input.length === 1 && parseInt(input, 10) > 1) {
           input = '0' + input;
@@ -138,7 +147,6 @@ export class BookNowComponent implements OnInit {
       } else if (input.length > 2 && input.length <= 4) {
         let month = input.slice(0, 2);
         const year = input.slice(2, 4);
-
         if (parseInt(month, 10) > 12) {
           month = '12';
         }
@@ -187,13 +195,7 @@ export class BookNowComponent implements OnInit {
       document.getElementById('phoneNumber') as HTMLInputElement
     )?.value;
 
-    const customerInfo = {
-      salutation,
-      fullName,
-      email,
-      phoneNumber,
-    };
-
+    const customerInfo = { salutation, fullName, email, phoneNumber };
     localStorage.setItem('customerInfo', JSON.stringify(customerInfo));
   }
 

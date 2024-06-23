@@ -47,6 +47,18 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
         @media (max-width: 590px) {
           width: 300px;
         }
+        @media (max-width: 540px) {
+          width: 270px;
+          height: 300px;
+        }
+        @media (max-width: 524px) {
+          width: 220px;
+          height: 250px;
+        }
+        @media (max-width: 505px) {
+          width: 200px;
+          height: 230px;
+        }
       }
       .card-image img {
         width: 100%;
@@ -70,6 +82,12 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
         letter-spacing: 0.1em;
         white-space: nowrap;
         pointer-events: none;
+        @media (max-width: 590px) {
+          font-size: 1.2rem;
+        }
+        @media (max-width: 505px) {
+          font-size: 1rem;
+        }
       }
       .card:hover .view-details {
         opacity: 1;
@@ -96,15 +114,41 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
           width: 300px;
           height: 150px;
         }
+        @media (max-width: 540px) {
+          width: 270px;
+        }
+        @media (max-width: 524px) {
+          width: 220px;
+        }
+        @media (max-width: 505px) {
+          width: 200px;
+        }
       }
       .card-content h3 {
         font-size: 1.5rem;
         margin-bottom: 0.5rem;
+        @media (max-width: 590px) {
+          font-size: 1.3rem;
+        }
+        @media (max-width: 505px) {
+          font-size: 1.1rem;
+        }
       }
       .card-content p {
         color: #808080;
         font-size: 1.1rem;
         padding: 1rem;
+        @media (max-width: 590px) {
+          font-size: 1rem;
+        }
+        @media (max-width: 524px) {
+          padding: 0.1rem;
+          margin: auto;
+        }
+
+        @media (max-width: 505px) {
+          font-size: 0.88rem;
+        }
       }
       h3 {
         color: white;

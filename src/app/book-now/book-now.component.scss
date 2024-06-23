@@ -110,17 +110,40 @@ form {
   display: flex;
   flex-direction: row-reverse;
   justify-content: center;
+  gap: 20px;
 
-  input {
+  input[type="radio"] {
+    display: none;
+
+    &:checked + label::before {
+      content: "✔";
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      background-color: #000;
+    }
+  }
+
+  label {
     font-family: "Playfair Display", serif;
-    width: 65px;
-    height: 16.5px;
-    margin-top: 4.5px;
-    padding: 5px;
-    border: none;
-    border-radius: 3px;
-    font-size: 10px;
+    position: relative;
+    padding-left: 30px;
     cursor: pointer;
+    user-select: none;
+
+    &::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 20px;
+      height: 20px;
+      border: 2px solid #000;
+      border-radius: 3px;
+      background-color: white;
+    }
   }
 }
 

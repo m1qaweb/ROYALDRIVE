@@ -7,8 +7,11 @@
 <div id="transition-overlay2" class="transition-overlay2"></div>
 
 <router-outlet></router-outlet>
-<app-footer></app-footer>
-<div *ngIf="!isVehiclesRoute && !isDriversRoute" class="indicators">
+<app-footer *ngIf="!isCustomerRoute"></app-footer>
+<div
+  *ngIf="!isVehiclesRoute && !isDriversRoute && !isCustomerRoute"
+  class="indicators"
+>
   <div class="indicator" id="Home"></div>
   <div class="indicator" id="Menu"></div>
 </div>

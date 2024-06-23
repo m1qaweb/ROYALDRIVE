@@ -40,6 +40,12 @@
   color: white;
   font-weight: 25px;
   padding-bottom: 3rem;
+  @media (max-width: 540px) {
+    padding-bottom: 1.4rem;
+  }
+  @media (max-width: 524px) {
+    padding-bottom: 1.1rem;
+  }
 }
 .modal-header button {
   background: none;
@@ -47,6 +53,12 @@
   font-size: 1.5rem;
   color: white;
   cursor: pointer;
+  @media (max-width: 540px) {
+    font-size: 1.2rem;
+  }
+  @media (max-width: 524px) {
+    font-size: 1rem;
+  }
 }
 .modal-content {
   display: flex;
@@ -54,10 +66,22 @@
   align-items: center;
   flex-direction: column;
   gap: 2rem;
+  @media (max-width: 540px) {
+    gap: 1.5rem;
+  }
+  @media (max-width: 524px) {
+    gap: 1.2rem;
+  }
 }
 .modal-content p {
   color: white;
   text-align: center;
+  @media (max-width: 540px) {
+    font-size: 13px;
+  }
+  @media (max-width: 524px) {
+    font-size: 12px;
+  }
 }
 button {
   position: absolute;
@@ -80,6 +104,18 @@ button {
   width: 120px;
   padding-top: 55px;
   margin: auto;
+  @media (max-width: 590px) {
+    padding-top: 38px;
+  }
+  @media (max-width: 540px) {
+    padding-top: 40px;
+  }
+  @media (max-width: 524px) {
+    padding-top: 27px;
+  }
+  @media (max-width: 505px) {
+    padding-top: 15px;
+  }
 
   p {
     color: #ffffff;
@@ -99,6 +135,14 @@ button {
       hsla(0, 0%, 100%, 0.3),
       hsla(0, 0%, 0%, 0.3)
     );
+    @media (max-width: 540px) {
+      padding: 4px 15px;
+      font-size: 12px;
+    }
+    @media (max-width: 524px) {
+      padding: 3px 13px;
+      font-size: 11px;
+    }
   }
 }
 .logo {

@@ -72,6 +72,15 @@
   height: 100%;
   padding: 1rem 5rem;
   z-index: 500;
+  @media (max-width: 590px) {
+    padding: 1rem 3rem;
+  }
+  @media (max-width: 540px) {
+    padding: 0 2rem;
+  }
+  @media (max-width: 540px) {
+    padding: 0 1.5rem;
+  }
 }
 
 .cards-container {

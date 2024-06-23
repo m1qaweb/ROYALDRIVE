@@ -40,6 +40,7 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
 
   public isVehiclesRoute = false;
   public isDriversRoute = false;
+  public isCustomerRoute = false;
   public isMainRoute = false;
   private navigationSubscription!: Subscription;
 
@@ -51,8 +52,13 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
         this.isVehiclesRoute = event.urlAfterRedirects === '/vehicles';
         this.isMainRoute = event.urlAfterRedirects === '/';
         this.isDriversRoute = event.urlAfterRedirects === '/drivers';
+        this.isCustomerRoute = event.urlAfterRedirects === '/customer-gallery';
 
-        if (this.isVehiclesRoute || this.isDriversRoute) {
+        if (
+          this.isVehiclesRoute ||
+          this.isDriversRoute ||
+          this.isCustomerRoute
+        ) {
           this.lockScroll();
           this.scrollToMenuS();
         } else {
