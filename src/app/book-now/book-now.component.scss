@@ -1,0 +1,200 @@
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap");
+
+.book-now-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+.book-now-content {
+  font-family: "Playfair Display", serif;
+  background-image: url(/assets/images/fullcarbon.jpg);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.5);
+  padding: 30px;
+  border-radius: 10px;
+  width: 600px;
+  color: white;
+  text-align: center;
+  transform: scale(0.8);
+  transition: transform 300ms ease-in-out;
+  h2 {
+    font-size: 32px;
+    font-weight: bolder;
+    padding-top: 8px;
+    padding-bottom: 30px;
+    margin: 15px;
+    user-select: none;
+  }
+}
+
+.book-now-overlay[style*="opacity: 1"] .book-now-content {
+  transform: scale(1);
+}
+.title {
+  padding: 5px;
+  -webkit-box-shadow: 0px 0px 53px 18px rgba(0, 0, 0, 0.6);
+  -moz-box-shadow: 0px 0px 53px 18px rgba(0, 0, 0, 0.6);
+  box-shadow: 0px 0px 53px 18px rgba(0, 0, 0, 0.6);
+}
+form {
+  padding: 20px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+  text-align: left;
+  h3 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 14px;
+    user-select: none;
+  }
+}
+
+.form-row {
+  display: flex;
+  justify-content: space-between;
+
+  .form-group {
+    flex: 1;
+
+    &:first-child {
+      margin-right: 10px;
+    }
+  }
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  color: white;
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  font-family: "Roboto", sans-serif;
+  font-size: 14px;
+}
+
+.form-group input.invalid {
+  border: 1px solid red;
+}
+
+.form-group .error-message {
+  color: red;
+  font-size: 15px;
+  padding: 10px;
+}
+
+.form-group input:focus {
+  outline: none;
+  box-shadow: 0px 0px 5px 2px rgba(255, 255, 255, 0.5);
+}
+.sex {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: center;
+  gap: 20px;
+
+  input[type="radio"] {
+    display: none;
+
+    &:checked + label::before {
+      content: "✔";
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      background-color: #000;
+    }
+  }
+
+  label {
+    font-family: "Playfair Display", serif;
+    position: relative;
+    padding-left: 30px;
+    cursor: pointer;
+    user-select: none;
+
+    &::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 20px;
+      height: 20px;
+      border: 2px solid #000;
+      border-radius: 3px;
+      background-color: white;
+    }
+  }
+}
+
+#cardholderName {
+  margin-bottom: 20px;
+}
+button[type="submit"] {
+  font-family: "Playfair Display", serif;
+  margin-top: 20px;
+  padding: 12px 30px;
+  border: 2px solid;
+  border-radius: 1px;
+  border-image-slice: 1;
+  border-image-source: linear-gradient(
+    to top,
+    hsla(0, 0%, 0%, 0.3),
+    hsla(0, 0%, 100%, 0.3),
+    hsla(0, 0%, 100%, 0.3),
+    hsla(0, 0%, 0%, 0.3)
+  );
+  background-color: black;
+  color: #ffffff;
+  cursor: pointer;
+  text-wrap: nowrap;
+  letter-spacing: 0.2rem;
+  font-size: 16px;
+  transition: background 0.3s ease;
+}
+
+button[type="submit"]:hover {
+  background: #111111;
+}
+
+.close-button {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+
+  i {
+    font-size: 22px;
+  }
+}
+
+.collapsible-content {
+  transition: max-height 0.3s ease-in-out;
+  overflow: hidden;
+}
+p {
+  font-size: 20px;
+}

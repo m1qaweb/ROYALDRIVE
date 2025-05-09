@@ -1,0 +1,105 @@
+<div *ngIf="showPopupFlag" @fadeInOut>
+  <app-popup
+    [message]="popupMessage ?? ''"
+    [type]="popupType"
+    (close)="closePopup()"
+  ></app-popup>
+</div>
+
+<div class="book-now-overlay" @fadeInOut>
+  <div class="book-now-content">
+    <h2>{{ data.make }} {{ data.model }}</h2>
+    <form (submit)="handlePayment($event)">
+      <div class="form-group">
+        <h3 class="title">Customer Information</h3>
+        <div [@collapse]="sections.customerInfo ? 'expanded' : 'collapsed'">
+          <div class="sex">
+            <input
+              type="radio"
+              id="mrs"
+              name="salutation"
+              value="Mrs."
+              required
+            />
+            <label for="mrs">Mrs.</label>
+            <input
+              type="radio"
+              id="mr"
+              name="salutation"
+              value="Mr."
+              required
+            />
+            <label for="mr">Mr.</label>
+          </div>
+          <div class="form-group">
+            <label for="fullName">Full Name</label>
+            <input id="fullName" type="text" placeholder="Full Name" required />
+          </div>
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input
+              id="email"
+              type="email"
+              placeholder="Email Address"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="phoneNumber">Phone Number</label>
+            <input
+              id="phoneNumber"
+              type="text"
+              placeholder="Phone Number"
+              required
+            />
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <h3 class="title">Payment Options</h3>
+        <div [@collapse]="sections.paymentOptions ? 'expanded' : 'collapsed'">
+          <label for="cardholderName">Cardholder Name</label>
+          <input
+            id="cardholderName"
+            type="text"
+            placeholder="Cardholder Name"
+            required
+          />
+          <div class="form-group">
+            <label for="cardNumber">Card Number</label>
+            <input
+              id="cardNumber"
+              type="text"
+              placeholder="Card Number"
+              required
+            />
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="expiryDate">Expiry Date</label>
+              <input
+                id="expiryDate"
+                type="text"
+                placeholder="MM/YY"
+                required
+                [class.invalid]="isExpired"
+              />
+              <div *ngIf="isExpired" class="error-message">
+                Your card is expired
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="cvc">CVC</label>
+              <input id="cvc" type="text" placeholder="CVC" required />
+            </div>
+          </div>
+        </div>
+      </div>
+      <p>Price: {{ data.price / 200 | number : "1.2-2" }}$ Per Day</p>
+      <button type="submit">PAY</button>
+    </form>
+    <button class="close-button" (click)="close()">
+      <i class="bi bi-x-lg"></i>
+    </button>
+  </div>
+</div>

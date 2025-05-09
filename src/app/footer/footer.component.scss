@@ -1,0 +1,24 @@
+.footer {
+  position: absolute;
+  left: 1%;
+  bottom: 1%;
+  z-index: 2000;
+  user-select: none;
+  @media (max-width: 1100px) {
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-wrap: nowrap;
+  }
+}
+.footer__copyright {
+  padding: 5px 10px;
+  font-size: 12px;
+  color: #bdbdbdbd;
+  @media (max-width: 476px) {
+    font-size: 10px;
+  }
+  @media (max-width: 476px) {
+    font-size: 8px;
+  }
+}

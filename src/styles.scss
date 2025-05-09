@@ -1,0 +1,49 @@
+@import "../node_modules/@angular/material/prebuilt-themes/indigo-pink.css";
+@import url("https://fonts.googleapis.com/css2?family=Alex+Brush&display=swap");
+@import "../node_modules/fullpage.js/dist/fullpage.min.css";
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  height: 100vh;
+  background-color: black;
+  color: black;
+}
+main {
+  height: 87vh;
+}
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.custom-dialog-container {
+  padding: 0 !important;
+  overflow: hidden;
+}
+
+.transparent-backdrop {
+  background: transparent;
+}
+
+.mat-mdc-dialog-surface {
+  background-color: black !important;
+  background-image: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.1) 25%,
+      transparent 25%
+    ),
+    linear-gradient(-135deg, rgba(255, 255, 255, 0.1) 25%, transparent 25%),
+    linear-gradient(135deg, transparent 50%, rgba(255, 255, 255, 0.1) 75%),
+    linear-gradient(-135deg, transparent 50%, rgba(255, 255, 255, 0.1) 75%) !important;
+  background-size: 20px 20px !important;
+  background-position: 0 0, 0 10px, 10px -10px, -10px 0 !important;
+}

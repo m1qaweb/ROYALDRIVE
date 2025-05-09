@@ -1,0 +1,136 @@
+@import url("https://fonts.googleapis.com/css2?family=Alex+Brush&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap");
+
+:host {
+  display: block;
+  overflow: hidden;
+  height: 100vh;
+}
+
+#fullpage {
+  height: 100%;
+  width: 100%;
+  position: relative;
+
+  .section {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transform: translateY(100vh);
+    transition: opacity 1.5s ease-in-out, transform 1.5s ease-in-out;
+    will-change: opacity, transform;
+    z-index: 1;
+
+    &:nth-child(1) {
+      opacity: 1;
+      transform: translateY(0);
+      z-index: 2;
+    }
+
+    .hero-text {
+      width: 100%;
+      position: absolute;
+      top: 45%;
+      left: 0%;
+      color: #ffffff;
+      font-size: 2rem;
+      text-align: center;
+      user-select: none;
+      letter-spacing: 0.1rem;
+      font-family: "Playfair Display", serif;
+      animation: fadeInUp 1.2s ease-in-out both;
+      @media (max-width: 962px) {
+        font-size: 1.7rem;
+      }
+      @media (max-width: 878px) {
+        font-size: 1.5rem;
+      }
+      @media (max-width: 710px) {
+        margin-left: 2.2rem;
+        font-size: 1.3rem;
+        word-wrap: break-word;
+        width: 90%;
+      }
+      @media (max-width: 500px) {
+        font-size: 1.2rem;
+        margin-left: 1.69rem;
+      }
+      @media (max-width: 472px) {
+        font-size: 1.1rem;
+        margin-left: 1.32rem;
+      }
+      @media (max-width: 350px) {
+        font-size: 1rem;
+      }
+    }
+
+    .scroll-down {
+      position: absolute;
+      width: 100%;
+      bottom: 5%;
+      left: 0;
+      transform: translateX(-50%);
+      color: #808080;
+      font-size: 1rem;
+      text-align: center;
+      user-select: none;
+      font-family: "Playfair Display", serif;
+      animation: fadeInUp 1.2s ease-in-out both;
+      @media (max-width: 476px) {
+        font-size: 0.7rem;
+      }
+    }
+
+    .title-2 {
+      text-align: center;
+      position: absolute;
+      top: 2rem;
+      z-index: 3;
+      color: #808080;
+      font-size: 2rem;
+      font-family: "Playfair Display", serif;
+      letter-spacing: 0.2rem;
+      animation: fadeIn 1.2s ease-in-out both;
+    }
+  }
+}
+
+.section.in-view .container {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@keyframes revealColor {
+  0% {
+    clip-path: inset(100% 0 0 0);
+  }
+  100% {
+    clip-path: inset(18% 0 0 0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 100%, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}

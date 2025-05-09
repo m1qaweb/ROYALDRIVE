@@ -1,0 +1,39 @@
+<div id="transition-overlay3" class="transition-overlay3"></div>
+
+<div id="vehicles-s" class="vhcl">
+  <h2 class="title-2">OUR VEHICLES</h2>
+  <div class="exit" (click)="navigateToHome()">
+    <app-lottie-animation animationType="arrow"></app-lottie-animation>
+    <a>Home</a>
+  </div>
+  <div class="container">
+    <div class="carousel">
+      <div class="carousel-inner">
+        <div
+          class="carousel-item"
+          *ngFor="let car of displayedItems; let i = index"
+          [class.clone]="i >= 12"
+        >
+          <div class="card">
+            <img [src]="car.image" alt="{{ car.make }} {{ car.model }}" />
+            <div class="card-content">
+              <h3>{{ car.make }} {{ car.model }}</h3>
+              <p>{{ car.price | currency }}</p>
+            </div>
+            <div class="card-footer">
+              <button
+                class="btn btn-primary"
+                (click)="viewDetails(car, $event)"
+              >
+                View Details
+              </button>
+              <button class="btn btn-secondary" (click)="bookNow(car, $event)">
+                Book Now
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

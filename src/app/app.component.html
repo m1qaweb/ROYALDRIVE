@@ -1,0 +1,17 @@
+<div id="loading-screen" class="loading-screen">
+  <div class="loading-icon">
+    <span class="loading-text">R</span>
+  </div>
+</div>
+<div id="transition-overlay" class="transition-overlay"></div>
+<div id="transition-overlay2" class="transition-overlay2"></div>
+
+<router-outlet></router-outlet>
+<app-footer *ngIf="!isCustomerRoute"></app-footer>
+<div
+  *ngIf="!isVehiclesRoute && !isDriversRoute && !isCustomerRoute"
+  class="indicators"
+>
+  <div class="indicator" id="Home"></div>
+  <div class="indicator" id="Menu"></div>
+</div>

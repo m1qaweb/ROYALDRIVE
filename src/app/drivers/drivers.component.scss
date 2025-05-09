@@ -1,0 +1,135 @@
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Alex+Brush&display=swap");
+.transition-overlay3 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  z-index: 9999;
+  transform: translateX(100%);
+  opacity: 0;
+  transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 1s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform, opacity, visibility;
+  pointer-events: none;
+}
+
+.transition-overlay3.active {
+  transform: translateX(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+.title-2 {
+  text-align: center;
+  z-index: 3;
+  color: #808080;
+  font-size: 2rem;
+  font-family: "Playfair Display", serif;
+  letter-spacing: 0.2rem;
+  animation: fadeIn 1.2s ease-in-out both;
+
+  @media (max-width: 768px) {
+    font-size: 1.5rem;
+  }
+
+  @media (max-width: 420px) {
+    font-size: 1.2rem;
+  }
+}
+
+#drivers-s {
+  font-family: "Playfair Display", serif;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow-y: visible;
+  padding: 1rem;
+  box-sizing: border-box;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url(/assets/images/car-driver-2.jpg);
+    filter: brightness(40%);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    pointer-events: none;
+    z-index: -1;
+  }
+}
+
+.cards-container-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: 1rem 5rem;
+  z-index: 500;
+  @media (max-width: 590px) {
+    padding: 1rem 3rem;
+  }
+  @media (max-width: 540px) {
+    padding: 0 2rem;
+  }
+  @media (max-width: 540px) {
+    padding: 0 1.5rem;
+  }
+}
+
+.cards-container {
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.exit {
+  display: flex;
+  font-family: "Playfair Display", serif;
+  position: absolute;
+  top: 1.5rem;
+  right: 3rem;
+  z-index: 100;
+
+  @media (max-width: 628px) {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.2rem;
+  }
+
+  a {
+    color: #808080;
+    font-size: 0.9rem;
+    letter-spacing: 0.2rem;
+    cursor: pointer;
+    margin-top: 11px;
+    z-index: 100;
+
+    @media (max-width: 768px) {
+      font-size: 0.8rem;
+      margin-top: 13px;
+    }
+    @media (max-width: 628px) {
+      font-size: 0.77rem;
+      margin-top: 13px;
+    }
+
+    @media (max-width: 480px) {
+      font-size: 0.7rem;
+      margin-top: 9px;
+    }
+  }
+}
+.scroll {
+  font-family: "Playfair Display", serif;
+  position: absolute;
+  top: 20rem;
+  right: -7rem;
+}

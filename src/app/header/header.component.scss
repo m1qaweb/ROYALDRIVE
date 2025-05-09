@@ -1,0 +1,207 @@
+@import url("https://fonts.googleapis.com/css2?family=Alex+Brush&display=swap");
+
+.mat-toolbar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  z-index: 1;
+}
+
+.mat-toolbar-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0.6);
+  position: relative;
+}
+
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.royalDrive {
+  cursor: pointer;
+  font-family: "Alex Brush", cursive;
+  font-size: 3.4rem;
+  padding: 1rem;
+  color: black;
+  letter-spacing: 0.3rem;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.5s ease;
+
+  @media (max-width: 962px) {
+    font-size: 3rem;
+  }
+  @media (max-width: 878px) {
+    font-size: 2.8rem;
+  }
+  @media (max-width: 710px) {
+    font-size: 2.5rem;
+  }
+  @media (max-width: 500px) {
+    font-size: 2.2rem;
+  }
+  @media (max-width: 472px) {
+    font-size: 2.1rem;
+  }
+  @media (max-width: 350px) {
+    font-size: 2rem;
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: white;
+    transition: top 1s ease-in-out;
+    z-index: -1;
+  }
+}
+
+.royalDrive::before,
+.royalDrive::after {
+  content: "";
+  position: absolute;
+  height: 0.1rem;
+  background-color: black;
+  animation: borderSlide 10s cubic-bezier(0.5, 1, 0.1, 1) infinite,
+    colorFade 12s linear infinite;
+  @media (max-width: 350px) {
+    height: 0.07rem;
+  }
+}
+
+.royalDrive::before {
+  top: 0;
+  left: -100%;
+}
+
+.royalDrive::after {
+  bottom: 0;
+  right: -100%;
+  animation: borderSlideReverse 10s cubic-bezier(0.5, 1, 0.1, 1) infinite,
+    colorFadeReverse 12s linear infinite;
+}
+
+@keyframes borderSlide {
+  0%,
+  100% {
+    width: 0;
+    left: -100%;
+    opacity: 1;
+    transform: scaleX(1);
+  }
+  25% {
+    width: 100%;
+    left: 0;
+    opacity: 0.75;
+    transform: scaleX(1.1);
+  }
+  50% {
+    width: 100%;
+    left: 0;
+    opacity: 0.1;
+    transform: scaleX(0.1);
+  }
+  75% {
+    width: 100%;
+    left: 0;
+    opacity: 0.75;
+    transform: scaleX(1.1);
+  }
+}
+
+@keyframes borderSlideReverse {
+  0%,
+  100% {
+    width: 0;
+    right: -100%;
+    opacity: 1;
+    transform: scaleX(1);
+  }
+  25% {
+    width: 100%;
+    right: 0;
+    opacity: 0.75;
+    transform: scaleX(1.1);
+  }
+  50% {
+    width: 100%;
+    right: 0;
+    opacity: 0;
+    transform: scaleX(0.1);
+  }
+  75% {
+    width: 100%;
+    right: 0;
+    opacity: 0.75;
+    transform: scaleX(1.1);
+  }
+}
+
+@keyframes colorFade {
+  0%,
+  100% {
+    background-color: #ffffff;
+  }
+  25% {
+    background-color: #ffffff;
+  }
+  50% {
+    background-color: #000000;
+  }
+  75% {
+    background-color: #000000;
+  }
+}
+
+@keyframes colorFadeReverse {
+  0%,
+  100% {
+    background-color: #000000;
+  }
+  25% {
+    background-color: #000000;
+  }
+  50% {
+    background-color: #ffffff;
+  }
+  75% {
+    background-color: #ffffff;
+  }
+}
+
+.spacer {
+  flex: 1;
+}
+
+.auth-buttons {
+  display: flex;
+  gap: 1rem;
+}
+
+@media (max-width: 959px) {
+  .logo {
+    margin: 0 auto;
+  }
+  nav mat-nav-menu {
+    display: none;
+  }
+}

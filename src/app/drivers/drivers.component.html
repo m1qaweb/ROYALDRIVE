@@ -1,0 +1,37 @@
+<div id="transition-overlay3" class="transition-overlay3"></div>
+<div id="drivers-s">
+  <h2 class="title-2">OUR DRIVERS</h2>
+  <div class="exit" (click)="navigateToHome()">
+    <app-lottie-animation animationType="arrow"></app-lottie-animation>
+    <a>Home</a>
+  </div>
+
+  <div class="cards-container-wrapper">
+    <div class="cards-container">
+      <app-card
+        *ngFor="let card of cards; let i = index"
+        [name]="card.name"
+        [description]="card.description"
+        [image]="card.image"
+        (click)="onCardClicked(i, $event)"
+      ></app-card>
+    </div>
+  </div>
+  <div class="scroll">
+    <app-lottie-animation animationType="scroll"></app-lottie-animation>
+  </div>
+
+  <app-driver-modal
+    *ngIf="selectedDriver"
+    [driver]="selectedDriver"
+    [cardElement]="cardElement"
+    (close)="closeModal()"
+    (hireNowClicked)="showPopup()"
+  ></app-driver-modal>
+</div>
+<app-popup
+  *ngIf="showPopupFlag"
+  [message]="popupMessage"
+  [type]="popupType"
+  (close)="closePopup()"
+></app-popup>

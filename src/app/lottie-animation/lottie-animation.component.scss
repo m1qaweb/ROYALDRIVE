@@ -1,0 +1,42 @@
+#animation-container {
+  width: 100%;
+  height: 400px;
+  position: absolute;
+  bottom: -9.52%;
+  left: 0%;
+  z-index: 100;
+  @media (max-width: 771.99px) {
+    display: none;
+  }
+}
+#animation-mbscroll {
+  width: 100%;
+  height: 100px;
+  position: absolute;
+  bottom: 7%;
+  left: 0%;
+  z-index: 100;
+  @media (min-width: 771.98px) {
+    display: none;
+  }
+  @media (max-width: 476px) {
+    height: 60px;
+  }
+}
+#animation-arrow {
+  width: 100%;
+  height: 45px;
+  z-index: 100;
+  cursor: pointer;
+  @media (max-width: 480px) {
+    height: 35px;
+  }
+}
+#animation-scroll {
+  width: 100%;
+  height: 350px;
+  z-index: 100;
+  @media (max-width: 595px) {
+    display: none;
+  }
+}
